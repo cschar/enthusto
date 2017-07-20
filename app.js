@@ -30,6 +30,8 @@ dotenv.load({ path: '.env.example' });
 /**
  * Controllers (route handlers).
  */
+const bookController = require('./controllers/book')
+const browseController = require('./controllers/browse')
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
@@ -94,10 +96,14 @@ app.use((req, res, next) => {
 });
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
+
+//add user variable for pug templates to use
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+
+
 app.use((req, res, next) => {
   // After successful login, redirect back to the intended page
   if (!req.user &&
@@ -113,7 +119,17 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+app.use('/react', express.static(path.join(__dirname, 'dist'), { maxAge: 31557600000 }));
+// app.use(express.static(path.join(__dirname, 'dist'), { maxAge: 31557600000 }));
 
+/* React browse route */
+app.get('/browse', browseController.index)
+
+app.route('/books')
+  .get(bookController.getBooks)
+  .post(bookController.createBooks)
+
+app.get('/books/:Id', bookController.getBooksDetail)
 /**
  * Primary app routes.
  */
