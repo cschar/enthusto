@@ -18,28 +18,6 @@ var guiInterval = 200; //draw each 200ms
 var innerSplits = (1000 / guiInterval)
 
 
-function draw()
-{
-
-    //paint the text
-    var canvas = document.getElementById('canvasSection');
-    var context = canvas.getContext('2d');
-    
-    
-
-    //paint the square
-
-    var canvasSquare = document.getElementById('canvasSquare');
-    var ctxSquare = canvas.getContext('2d');
-
-    ctxSquare.fillStyle='#FF0000';
-    ctxSquare.fillRect(0, 130,1000,200);
-
-    return ctxSquare;
-}
-
-
-var y = 0;
 function drawGraph(vueapp){
     //since we currently increment X 1 unit each second,
     //use innerX to split up the 1 second unit for better graphing
@@ -92,41 +70,25 @@ function setUpSoundCloud(){
 
   widget.bind(SC.Widget.Events.READY, function() {
       widget.bind(SC.Widget.Events.PLAY_PROGRESS, function(data) {
-      // console.log(data);
-      // output.val(data.relativePosition)
-      //15.4 seconds
-      
       scX = data.currentPosition/1000
-      
-      // baseVal = Math.floor(val*innerSplits)
-
-      // x = val;
-      // songProgress.val(val);
-      // songProgressSlider.val(val);
   		});
-
-	  widget.bind(SC.Widget.Events.SEEK, function(data) {
-	      console.log(data);
-	  })
-
-
-	  widget.bind(SC.Widget.Events.PLAY, function() {
-
-	  });
-	  widget.bind(SC.Widget.Events.PAUSE, function() {
-
-	  });
+	  widget.bind(SC.Widget.Events.SEEK, function(data) {console.log(data);})
+	  widget.bind(SC.Widget.Events.PLAY, function() {});
+	  widget.bind(SC.Widget.Events.PAUSE, function() {});
 	});
   
   // set new volume level
-  widget.setVolume(20);
+  widget.setVolume(50);
   // widget.seekTo(10000);
   return widget;
 }
 
 $(document).ready(function() {
 	/////SOUND STUFF
-	var socket = io.connect('http://localhost:3000')
+	var socketConnect = window.location.href.split('/')
+	socketConnect = socketConnect[0] + "//" + socketConnect[2] 
+
+	var socket = io.connect(socketConnect) //http://mysite.com:3000
   window.s = socket;
   var roomID = window.location.href.split('/'); roomID = roomID[roomID.length - 1];
   var listenerID = '';
