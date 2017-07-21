@@ -5,7 +5,7 @@ const express = require('express');
 const compression = require('compression');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const logger = require('morgan');
+// const logger = require('morgan');  // dont want to see network log
 const chalk = require('chalk');
 const errorHandler = require('errorhandler');
 const lusca = require('lusca');
@@ -16,7 +16,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const expressValidator = require('express-validator');
-const expressStatusMonitor = require('express-status-monitor');
+// const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
 
@@ -45,7 +45,12 @@ const passportConfig = require('./config/passport');
 /**
  * Create Express server.
  */
+// const app = express();
+
+//socket express
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 /**
  * Connect to MongoDB.
@@ -64,13 +69,13 @@ mongoose.connection.on('error', (err) => {
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(expressStatusMonitor());
+// app.use(expressStatusMonitor());
 app.use(compression());
 app.use(sass({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public')
 }));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
@@ -237,12 +242,93 @@ app.get('/auth/pinterest/callback', passport.authorize('pinterest', { failureRed
  */
 app.use(errorHandler());
 
+
+
+
+var rooms = {}
+//monitor which users are using which songID 
+//give primary user master control to seek through song
+
+var allClients = []
+// socket
+io.on('connection', (socket) => {
+  console.log("socket connected")
+  allClients.push(socket);
+  var listenerID = 'foo' + Math.random().toString(36).substring(2,7);
+  var roomID = '';
+  var userData = {listenerID: listenerID, level: 0}
+
+  socket.emit('greet', { listenerID: listenerID });
+  
+
+  socket.on('startConnect', (data) =>{
+    roomID = data.room;
+    if ( rooms[data.room] == null ) {
+      rooms[data.room] = {}
+      // rooms[data.room]['master'] = data.listenerID
+      rooms[data.room]['users'] = []
+    }
+    rooms[data.room]['users'].push(userData)
+
+    console.log(`Connected to room ${roomID} with` + data.listenerID + '.. updating all')
+    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+  })
+
+//https://stackoverflow.com/questions/17287330/socket-io-handling-disconnect-event
+  socket.on('disconnect', () => {
+    console.log('Socket disconnected');
+    var i = allClients.indexOf(socket);
+    allClients.splice(i, 1);
+
+    
+    if ( rooms[roomID] == null) {
+     console.log("ERROR, couldnt disonnect from room " + roomID);
+      return;
+    }
+
+    
+      if ( rooms[roomID]['users'].length == 1) {
+        delete rooms[roomID]
+      }
+      else if ( rooms[roomID]['users'].length > 1) {
+        for (var i = 0; i < rooms[roomID]['users'].length; i++){
+          var user = rooms[roomID]['users'][i]
+          if (user.listenerID == listenerID){
+            rooms[roomID]['users'].splice(i, 1)
+            break;
+          }
+        }
+      }
+    
+    console.log(`updating room ${roomID} to ` + rooms[roomID]['users'])
+    // socket.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+    
+  });
+
+
+
+  socket.on('clientIncr', (data) => {
+    console.log("client incremented value")
+    console.log(data);
+    userData['level'] += 1;
+
+    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+  })
+
+});
+
 /**
  * Start Express server.
  */
-app.listen(app.get('port'), () => {
+// app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {  // socketio 
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env')); 
   console.log('  Press CTRL-C to stop\n');
 });
+
+
+
+
 
 module.exports = app;

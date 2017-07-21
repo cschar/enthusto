@@ -20,8 +20,6 @@ exports.getBooksDetail = (req, res) => {
 	console.log(req.params.Id)
 
   Book.findOne({_id: req.params.Id}, (err, book) => {
-  	console.log(err);
-  	console.log(book);
     res.render('booksDetail', {'book': book });
   });
 };

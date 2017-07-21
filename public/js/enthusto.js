@@ -2,6 +2,9 @@
 var x = 0;
 var p1y = 0;
 var p2y = 0;
+var canvas = document.getElementById('canvasSection');
+var ctxs = canvas.getContext('2d');
+    
 //only for updating GUI of player graph
 var innerX = 0;
 var guiInterval = 200; //draw each 200ms 
@@ -120,7 +123,7 @@ $(document).ready(function() {
 });
 
 
-    var ctxs = draw();
+    draw();
     var interval = setInterval( increment, guiInterval);
 
 });
