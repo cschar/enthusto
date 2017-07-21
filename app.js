@@ -246,6 +246,19 @@ app.use(errorHandler());
 
 
 var rooms = {}
+
+// reduce level 
+var reduceLevel = function(roomID){
+  if(rooms[roomID] !== null){
+    for (var i = 0; i < rooms[roomID]['users'].length; i++){
+          var user = rooms[roomID]['users'][i]
+          user.level = Math.max(user.level-5, 0);
+        }
+    }
+    console.log(roomID +" :REDUCING LEVEL" )
+    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+}
+
 //monitor which users are using which songID 
 //give primary user master control to seek through song
 
@@ -254,17 +267,23 @@ var allClients = []
 io.on('connection', (socket) => {
   console.log("socket connected")
   allClients.push(socket);
-  var listenerID = 'foo' + Math.random().toString(36).substring(2,7);
+  var listenerID = 'user_' + Math.random().toString(36).substring(2,7);
   var roomID = '';
   var userData = {listenerID: listenerID, level: 0}
 
   socket.emit('greet', { listenerID: listenerID });
+  
+  
+
   
 
   socket.on('startConnect', (data) =>{
     roomID = data.room;
     if ( rooms[data.room] == null ) {
       rooms[data.room] = {}
+      reduceLevelID = setInterval(reduceLevel.bind(null,data.room), 3000)
+      rooms[data.room]['reduceLevelID'] = reduceLevelID
+
       // rooms[data.room]['master'] = data.listenerID
       rooms[data.room]['users'] = []
     }
@@ -286,9 +305,12 @@ io.on('connection', (socket) => {
       return;
     }
 
-    
+      
       if ( rooms[roomID]['users'].length == 1) {
+        clearInterval(rooms[roomID]['reduceLevelID'])
         delete rooms[roomID]
+        
+        return;
       }
       else if ( rooms[roomID]['users'].length > 1) {
         for (var i = 0; i < rooms[roomID]['users'].length; i++){
@@ -313,7 +335,18 @@ io.on('connection', (socket) => {
     console.log(data);
     userData['level'] += 1;
 
-    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users'], user: userData})
+  })
+
+
+
+
+  //Soundcloud player controls 
+  socket.on('masterToggle', (data) => {
+    socket.broadcast.emit('masterToggle', {user: userData});
+  })
+  socket.on('masterReset', (data) => {
+    socket.broadcast.emit('masterReset', {user: userData});
   })
 
 });

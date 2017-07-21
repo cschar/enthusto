@@ -15,14 +15,14 @@
           a(href='/') Home
         li(class=(title == 'Books') ? 'active' : undefined)
           a(href='/books') books
-        li(class=(title == 'browse') ? 'active' : undefined)
-          a(href='/browse') browse
-        li(class=(title == 'API Examples') ? 'active' : undefined)
-          a(href='/api') API Examples
-        li(class=(title == 'Contact') ? 'active' : undefined)
-          a(href='/contact') Contact 
-        li
-          a(href='/status') Status
+        //- li(class=(title == 'browse') ? 'active' : undefined)
+        //-   a(href='/browse') browse
+        //- li(class=(title == 'API Examples') ? 'active' : undefined)
+        //-   a(href='/api') API Examples
+        //- li(class=(title == 'Contact') ? 'active' : undefined)
+        //-   a(href='/contact') Contact 
+        //- li
+        //-   a(href='/status') Status
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=(title == 'Login') ? 'active' : undefined)
