@@ -30,7 +30,7 @@ dotenv.load({ path: '.env.example' });
 /**
  * Controllers (route handlers).
  */
-const bookController = require('./controllers/book')
+const songRoomController = require('./controllers/songRoom')
 const browseController = require('./controllers/browse')
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
@@ -130,11 +130,11 @@ app.use('/react', express.static(path.join(__dirname, 'dist'), { maxAge: 3155760
 /* React browse route */
 app.get('/browse', browseController.index)
 
-app.route('/books')
-  .get(bookController.getBooks)
-  .post(bookController.createBooks)
+app.route('/songrooms')
+  .get(songRoomController.getSongRooms)
+  .post(songRoomController.createSongRooms)
 
-app.get('/books/:Id', bookController.getBooksDetail)
+app.get('/songRooms/:Id', songRoomController.getSongRoomsDetail)
 /**
  * Primary app routes.
  */

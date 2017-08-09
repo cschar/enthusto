@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .page-header
+
+    h3 Add a Song Room
+    form#songroomformA(action='/songrooms', method='post')
+      div
+        label(for='songRoomName') Song Room URL (soundcloud): 
+        input#songRoomName(type='text', name='name')
+        input(type='hidden', name='_csrf', value=_csrf)
+
+      input(type='submit', value='Submit')
+
+    br
+    br
+    h3 All Song Rooms
+
+  ul
+    for songRoom in songRooms
+      li
+        div
+          a(href='/songrooms/' + songRoom.id) 
+            span= songRoom.name
+          p= songRoom.id
