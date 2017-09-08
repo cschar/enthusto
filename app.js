@@ -246,8 +246,13 @@ app.use(errorHandler());
 
 
 var rooms = {}
+
+//for each room...
 var syncNeeded = false;
 var songPos = 0;
+var isPaused = 0;
+
+//reduceLevel and ClientIcr both call updateRoom
 
 // reduce level of user enthusiasm in graph
 //TODO: rename this to enthusiasmLevel or enthLevel ?
@@ -260,9 +265,20 @@ var reduceLevel = function(roomID){
     }
     console.log(`Room ${roomID} Emitting updateRoom`)
 
+    //Piggyback songposition and isPaused on enthLevel updates
+    if ( rooms.hasOwnProperty(roomID)) {
+      var s = rooms[roomID]['songPosition']
+      var p = rooms[roomID]['isPaused']
+    }
+  //console.log("recudelevel emit")
+  //console.log(s)
+  //console.log(p)
+  //console.log(rooms[roomID])
+
     io.emit('updateRoom', {roomID: roomID,
                            users: rooms[roomID]['users'],
-                           songPositionInSeconds: 0})
+                           songPosition: s,
+                           isPaused: p})
 }
 
 //monitor which users are using which songID 
@@ -275,6 +291,7 @@ io.on('connection', (socket) => {
   allClients.push(socket);
   var listenerID = 'user_' + Math.random().toString(36).substring(2,7);
   var roomID = '';
+  //userData to track each socket connection in this function
   var userData = {listenerID: listenerID, level: 0}
 
   socket.emit('greet', { listenerID: listenerID });
@@ -286,17 +303,21 @@ io.on('connection', (socket) => {
   socket.on('startConnect', (data) =>{
     roomID = data.room;
     if ( rooms[data.room] == null ) {
-      rooms[data.room] = {}
+      rooms[data.room] = {users: [],
+                          isPaused: true,
+                          songPosition: 0}
       reduceLevelID = setInterval(reduceLevel.bind(null,data.room), 3000)
       rooms[data.room]['reduceLevelID'] = reduceLevelID
 
-      // rooms[data.room]['master'] = data.listenerID
-      rooms[data.room]['users'] = []
     }
     rooms[data.room]['users'].push(userData)
 
     console.log(`Connected to room ${roomID} with` + data.listenerID + '.. updating all')
-    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+    io.emit('updateRoom', {roomID: roomID,
+                           users: rooms[roomID]['users'],
+                           user: userData,
+                           songPosition: rooms[roomID]['songPosition'],
+                           isPaused: rooms[roomID]['isPaused']})
   })
 
 //https://stackoverflow.com/questions/17287330/socket-io-handling-disconnect-event
@@ -311,13 +332,12 @@ io.on('connection', (socket) => {
       return;
     }
 
-      
+      //last user in room, delete this room
       if ( rooms[roomID]['users'].length == 1) {
         clearInterval(rooms[roomID]['reduceLevelID'])
         delete rooms[roomID]
-        
         return;
-      }
+      } //more than 1 user, reassign master of room if master leaves
       else if ( rooms[roomID]['users'].length > 1) {
         for (var i = 0; i < rooms[roomID]['users'].length; i++){
           var user = rooms[roomID]['users'][i]
@@ -329,27 +349,21 @@ io.on('connection', (socket) => {
       }
     
     console.log(`updating room ${roomID} to ` + rooms[roomID]['users'])
-    // socket.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
-    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+
+    //update all clients in room that user list has changed
+    io.emit('updateRoom', {roomID: roomID,
+                           users: rooms[roomID]['users']})
     
   });
-
-
 
   socket.on('clientIncr', (data) => {
     console.log("client incremented value")
     console.log(data);
     userData['level'] += 1;
-
-    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users'], user: userData})
-  })
-
-
-  socket.on('masterSync', (data) => {
-    console.log("masterSync received")
-    console.log(data)
-    //io.emit('updateSync', songPos)
-    socket.broadcast.emit('masterSync', {songPositionInMilliseconds: data});
+    //update all clients
+    io.emit('updateRoom', {roomID: roomID,
+                           users: rooms[roomID]['users'],
+                           user: userData})
   })
 
 
@@ -357,12 +371,26 @@ io.on('connection', (socket) => {
   //https://stackoverflow.com/a/40829919/403403
   //socket.broadcast.emit --> send signal to all Other clients
   socket.on('masterToggle', (data) => {
-
+    if (rooms.hasOwnProperty(roomID)){
+    console.log("set is paused")
+    console.log(data)
+    rooms[roomID]['isPaused'] = data.isPaused;
+  }
     socket.broadcast.emit('masterToggle', {user: userData});
   })
   socket.on('masterReset', (data) => {
 
     socket.broadcast.emit('masterReset', {user: userData});
+  })
+
+  socket.on('masterSync', (data) => {
+    //console.log("masterSync received")
+    //console.log(data)
+    if (rooms.hasOwnProperty(roomID)){
+      rooms[roomID]['songPosition'] = data
+    }
+    //send to all other clients except one that sent this
+    socket.broadcast.emit('masterSync', {songPositionInMilliseconds: data});
   })
 
 });

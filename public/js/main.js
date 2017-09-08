@@ -97,17 +97,17 @@ $(document).ready(function() {
 
 	//clients receive these messages to control widget
 	//master controls widget with UI, fires off vue controllers to emit signals to clients
- 	socket.on('masterToggle', function(data){
- 		//console.log("told to toggle sc by" + data.user);
-		console.log("told to toggle sc by" + data.user.listenerID);
- 		widget.toggle();
- })
-
-  socket.on('masterReset', function(data){
-		//console.log("told to reset sc by" + data.user);
- 		console.log("told to reset sc by" + data.user.listenerID);
- 		widget.seekTo(0);
- })
+ //	socket.on('masterToggle', function(data){
+ //		//console.log("told to toggle sc by" + data.user);
+	//	console.log("told to toggle sc by" + data.user.listenerID);
+ //		widget.toggle();
+ //})
+ //
+ // socket.on('masterReset', function(data){
+	//	//console.log("told to reset sc by" + data.user);
+ //		console.log("told to reset sc by" + data.user.listenerID);
+ //		widget.seekTo(0);
+ //})
 
 	//if listenerID is same as first user id, set that user to master
 	var app = new Vue({
@@ -124,8 +124,16 @@ $(document).ready(function() {
 			},
   		masterToggle: function(){
   			console.log('playing')
-			 	socket.emit('masterToggle')
-			 	widget.toggle();
+
+				widget.toggle();
+				widget.isPaused(function(isPaused){
+					console.log("is paused???")
+					console.log(isPaused)
+					if(isPaused){socket.emit('masterToggle', {isPaused: true})}
+					if(!isPaused){socket.emit('masterToggle', {isPaused: false})}
+				})
+
+
   		},
   		masterReset: function(){
   			console.log('reset')
@@ -201,11 +209,22 @@ $(document).ready(function() {
 	}
 
 
+	 if (!app.isMaster()){
+		 widget.isPaused(function(isPaused){
+				if(isPaused && data.isPaused) {
+					// do nothing
+				}else if(isPaused && !data.isPaused){
+					widget.play()
+				}else if(!isPaused && data.isPaused){
+					widget.pause()
+				}
+		 })
 
 
-
-
+	 }
  })
+
+
 
 	socket.on('masterSync', function (data) {
 		console.log("Received updateSync")
@@ -217,7 +236,12 @@ $(document).ready(function() {
 			if (listenerOffset > 1000) {
 				console.log("Resynchronizing. milliseconds off by :" + listenerOffset);
 				widget.seekTo(data.songPositionInMilliseconds)
-				widget.play()
+
+				//only play if local client si already playing...
+				//NO! need to know if playing by master,.. updateRoom
+				//widget.isPaused(function(isPaused){
+				//	if(!isPaused){ widget.play()	}
+				//})
 			}
 		})
 	})
