@@ -135,11 +135,11 @@ $(document).ready(function() {
 
 
   		},
-  		masterReset: function(){
-  			console.log('reset')
-			 	socket.emit('masterReset')
-			 	widget.seekTo(0);
-  		},
+  		//masterReset: function(){
+  		//	console.log('reset')
+			 //	socket.emit('masterReset')
+			 //	widget.seekTo(0);
+  		//},
   		incr: function(){
   			// y = 0; //y has to be set to the current level to balance out graph 
   			//y = this.level;
@@ -168,12 +168,6 @@ $(document).ready(function() {
        listenerID: listenerID} )
   });
 
-	//Is this needed?
- socket.on('FinishConnect', function(data){
-	 alert('finished')
-
- 	app.users = data.users;
- })
 
  socket.on('updateRoom', function(data){
  	console.log('updating room with ');
@@ -190,12 +184,11 @@ $(document).ready(function() {
 	 //master
 	 //set synch
 	 // every x seconds, broadcast where master listener is at
-	//UpdateRoom signal will have a special update to signal clients to seek new position
-
+	//UpdateRoom signal will have a specific update to signal clients to seek new position
 	if (app.isMaster()){
-		console.log("======= i am master")
-		console.log(" synch resp set?")
-		console.log(app.synchResponsibilitySet)
+
+		//console.log(" synch resp set?")
+		//console.log(app.synchResponsibilitySet)
 
 		if( !app.synchResponsibilitySet){
 			function periodicallyBroadcastMasterSongPosition(){

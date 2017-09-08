@@ -247,10 +247,6 @@ app.use(errorHandler());
 
 var rooms = {}
 
-//for each room...
-var syncNeeded = false;
-var songPos = 0;
-var isPaused = 0;
 
 //reduceLevel and ClientIcr both call updateRoom
 
@@ -378,10 +374,10 @@ io.on('connection', (socket) => {
   }
     socket.broadcast.emit('masterToggle', {user: userData});
   })
-  socket.on('masterReset', (data) => {
-
-    socket.broadcast.emit('masterReset', {user: userData});
-  })
+  //socket.on('masterReset', (data) => {
+  //
+  //  socket.broadcast.emit('masterReset', {user: userData});
+  //})
 
   socket.on('masterSync', (data) => {
     //console.log("masterSync received")
