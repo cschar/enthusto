@@ -246,8 +246,11 @@ app.use(errorHandler());
 
 
 var rooms = {}
+var syncNeeded = false;
+var songPos = 0;
 
-// reduce level 
+// reduce level of user enthusiasm in graph
+//TODO: rename this to enthusiasmLevel or enthLevel ?
 var reduceLevel = function(roomID){
   if(rooms[roomID] !== null){
     for (var i = 0; i < rooms[roomID]['users'].length; i++){
@@ -255,8 +258,11 @@ var reduceLevel = function(roomID){
           user.level = Math.max(user.level-5, 0);
         }
     }
-    console.log(roomID +" :REDUCING LEVEL" )
-    io.emit('updateRoom', {roomID: roomID, users: rooms[roomID]['users']})
+    console.log(`Room ${roomID} Emitting updateRoom`)
+
+    io.emit('updateRoom', {roomID: roomID,
+                           users: rooms[roomID]['users'],
+                           songPositionInSeconds: 0})
 }
 
 //monitor which users are using which songID 
@@ -339,13 +345,23 @@ io.on('connection', (socket) => {
   })
 
 
+  socket.on('masterSync', (data) => {
+    console.log("masterSync received")
+    console.log(data)
+    //io.emit('updateSync', songPos)
+    socket.broadcast.emit('masterSync', {songPositionInMilliseconds: data});
+  })
 
 
-  //Soundcloud player controls 
+  //Soundcloud player controls
+  //https://stackoverflow.com/a/40829919/403403
+  //socket.broadcast.emit --> send signal to all Other clients
   socket.on('masterToggle', (data) => {
+
     socket.broadcast.emit('masterToggle', {user: userData});
   })
   socket.on('masterReset', (data) => {
+
     socket.broadcast.emit('masterReset', {user: userData});
   })
 

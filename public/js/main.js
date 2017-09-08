@@ -62,10 +62,8 @@ function drawGraph(vueapp){
 
 
 function setUpSoundCloud(){
-
 	var widgetIframe = document.getElementById('sc-widget');
 	if ( widgetIframe == null) return;
-
 	var widget = SC.Widget(widgetIframe);
 
   widget.bind(SC.Widget.Events.READY, function() {
@@ -95,24 +93,35 @@ $(document).ready(function() {
   var widget = setUpSoundCloud();
  	document.w = widget;
 
+
+
+	//clients receive these messages to control widget
+	//master controls widget with UI, fires off vue controllers to emit signals to clients
  	socket.on('masterToggle', function(data){
- 		console.log("told to toggle sc by" + data.user.listenerID);
+ 		//console.log("told to toggle sc by" + data.user);
+		console.log("told to toggle sc by" + data.user.listenerID);
  		widget.toggle();
  })
 
   socket.on('masterReset', function(data){
+		//console.log("told to reset sc by" + data.user);
  		console.log("told to reset sc by" + data.user.listenerID);
  		widget.seekTo(0);
  })
 
+	//if listenerID is same as first user id, set that user to master
 	var app = new Vue({
     el: '#vueapp',
     data: {
    	  listenerID: '',
+			synchResponsibilitySet: false,
    	  level: 0,
       users: [{listenerID:'dummy', level: 0}]
   	},
   	methods:{
+			isMaster: function(){
+				return (this.listenerID == this.users[0].listenerID)
+			},
   		masterToggle: function(){
   			console.log('playing')
 			 	socket.emit('masterToggle')
@@ -151,13 +160,17 @@ $(document).ready(function() {
        listenerID: listenerID} )
   });
 
+	//Is this needed?
  socket.on('FinishConnect', function(data){
+	 alert('finished')
+
  	app.users = data.users;
- 	
  })
 
  socket.on('updateRoom', function(data){
- 	console.log('updating room with ' + data);
+ 	console.log('updating room with ');
+	console.log(data)
+
  	app.users = data.users;
  	for( var i=0; i < data.users.length; i++){
  		if ( data.users[i].listenerID == app.listenerID){
@@ -165,7 +178,49 @@ $(document).ready(function() {
  			break;
  		}
  	}
+
+	 //master
+	 //set synch
+	 // every x seconds, broadcast where master listener is at
+	//UpdateRoom signal will have a special update to signal clients to seek new position
+
+	if (app.isMaster()){
+		console.log("======= i am master")
+		console.log(" synch resp set?")
+		console.log(app.synchResponsibilitySet)
+
+		if( !app.synchResponsibilitySet){
+			function periodicallyBroadcastMasterSongPosition(){
+				 widget.getPosition(function(mseconds){
+					socket.emit('masterSync', mseconds)
+		 		})
+			}
+			setInterval(periodicallyBroadcastMasterSongPosition, 3000)
+			app.synchResponsibilitySet = true;
+		}
+	}
+
+
+
+
+
+
  })
+
+	socket.on('masterSync', function (data) {
+		console.log("Received updateSync")
+		console.log(data);
+		//clients
+		//reset widget position if they are de-synchronized by more than 1 second
+		widget.getPosition(function (mseconds) {
+			var listenerOffset = Math.abs(mseconds - data.songPositionInMilliseconds)
+			if (listenerOffset > 1000) {
+				console.log("Resynchronizing. milliseconds off by :" + listenerOffset);
+				widget.seekTo(data.songPositionInMilliseconds)
+				widget.play()
+			}
+		})
+	})
 
 
 
