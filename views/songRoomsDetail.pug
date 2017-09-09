@@ -3,28 +3,29 @@ extends layout
 block content
   .page-header
 
-    h3 Detail    
-    div
-      p= songRoom.name
-      p= songRoom.id
-
-    h1  Graph 
-
     div#vueapp
-      
-      h1 {{listenerID}} 
-        div(v-if="listenerID == users[0].listenerID") [Master]
 
-          
-          
+      div#detailContainer
+        div#detail-header
+          p Songroom #{songRoom.id}
+          p Listening to #{songRoom.name}
 
+        div#user-info
+          h1 {{listenerID}}
+          div(v-if="listenerID == users[0].listenerID")
+            div.master
+             h4 [Master]
+            p You are the master, use 'Toggle' to start/stop songs. You can scrub through the track and other listeners in the room will automatically be synchronized with you
+          div(v-if="listenerID != users[0].listenerID")
+            div.listener
+             h4 [Listener]
+            p You are a listener, sit back and let the Master guide your sonic journey. Use the big button if what you hear sounds interesting.
 
-      h1 Users
-      ul
-        li(v-for="user in users") {{ user }}
-          //- p= {{ user.id }}
-        
-      ul#users
+        div#room-info
+          h1 Users
+          ul#userList
+            li(v-for="user in users") {{ user }}
+
       div(v-if="listenerID == users[0].listenerID")
         button#masterToggle(v-on:click="masterToggle") toggle
 

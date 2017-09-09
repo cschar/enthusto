@@ -1,23 +1,52 @@
 
 
 
-
 var x = 0;
 var scX = 0;
-var canvas = document.getElementById('canvasSection');
-var ctxs = canvas.getContext('2d');
-ctxs.canvas.width  = 1400;
-ctxs.fillStyle    = '#0ff';
-ctxs.font         = 'italic 30px sans-serif';
-ctxs.textBaseline = 'top';
-ctxs.font         = 'bold 30px sans-serif';
-    
+
 //only for updating GUI of player graph
 var innerX = 0;
 var guiInterval = 200; //draw each 200ms 
 var innerSplits = (1000 / guiInterval)
 
 
+
+
+
+function setUpSoundCloud(){
+	var widgetIframe = document.getElementById('sc-widget');
+	if ( widgetIframe == null){
+		console.log("sound cloud widget failed to load")
+		return;
+	}
+	var widget = SC.Widget(widgetIframe);
+
+  widget.bind(SC.Widget.Events.READY, function() {
+      widget.bind(SC.Widget.Events.PLAY_PROGRESS, function(data) {
+      scX = data.currentPosition/1000
+  		});
+	  widget.bind(SC.Widget.Events.SEEK, function(data) {console.log(data);})
+	  widget.bind(SC.Widget.Events.PLAY, function() {});
+	  widget.bind(SC.Widget.Events.PAUSE, function() {});
+	});
+
+  // set new volume level
+  widget.setVolume(50);
+  // widget.seekTo(10000);
+  return widget;
+}
+
+$(document).ready(function() {
+	var canvas = document.getElementById('canvasSection');
+  if(canvas == null){ //we're not on a detail page
+		return;
+	}
+	var ctxs = canvas.getContext('2d');
+	ctxs.canvas.width  = 1400;
+	ctxs.fillStyle    = '#0ff';
+	ctxs.font         = 'italic 30px sans-serif';
+	ctxs.textBaseline = 'top';
+	ctxs.font         = 'bold 30px sans-serif';
 function drawGraph(vueapp){
     //since we currently increment X 1 unit each second,
     //use innerX to split up the 1 second unit for better graphing
@@ -30,7 +59,7 @@ function drawGraph(vueapp){
     canvasX = Math.floor(scX*innerSplits); // for a smooth line
 
     // canvasX = Math.floor(scX)*innerSplits;  // for a broken line
-    
+
     //redraw canvas
     ctxs.fillStyle='#FFF';
     // ctxs.fillRect(0, 0,1000,1000);
@@ -49,7 +78,7 @@ function drawGraph(vueapp){
 
 		  if ( i > colors.length -1 ){ ctxs.fillStyle = '#999'}
 		  else {ctxs.fillStyle = colors[i]}
-		 
+
 
 			var blipY = Math.max(user.level*3, 0);
 	    ctxs.fillRect(canvasX, blipY,2,10);
@@ -61,33 +90,14 @@ function drawGraph(vueapp){
 }
 
 
-function setUpSoundCloud(){
-	var widgetIframe = document.getElementById('sc-widget');
-	if ( widgetIframe == null) return;
-	var widget = SC.Widget(widgetIframe);
-
-  widget.bind(SC.Widget.Events.READY, function() {
-      widget.bind(SC.Widget.Events.PLAY_PROGRESS, function(data) {
-      scX = data.currentPosition/1000
-  		});
-	  widget.bind(SC.Widget.Events.SEEK, function(data) {console.log(data);})
-	  widget.bind(SC.Widget.Events.PLAY, function() {});
-	  widget.bind(SC.Widget.Events.PAUSE, function() {});
-	});
-  
-  // set new volume level
-  widget.setVolume(50);
-  // widget.seekTo(10000);
-  return widget;
-}
-
-$(document).ready(function() {
 	/////SOUND STUFF
-	var socketConnect = window.location.href.split('/')
-	socketConnect = socketConnect[0] + "//" + socketConnect[2] 
 
-	var socket = io.connect(socketConnect) //http://mysite.com:3000
+	//connect to http://mysite.com:3000
+	var socketConnect = window.location.href.split('/')
+	socketConnect = socketConnect[0] + "//" + socketConnect[2]
+	var socket = io.connect(socketConnect)
   window.s = socket;
+
   var roomID = window.location.href.split('/'); roomID = roomID[roomID.length - 1];
   var listenerID = '';
   var widget = setUpSoundCloud();

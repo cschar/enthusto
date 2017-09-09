@@ -1,17 +1,24 @@
 extends layout
 
 block content
-  h1 Enthusiasm sound graph
-  p.lead Listen along with others and match your interest through the song
-  hr
-  .row
+  div.dHeader
+      h1 Enthusiasm sound graph
+      p.lead Listen along with others and match your interest through the song
+      hr
+  .row.dBody
     .col-sm-12
       h2 Fun Party Game to understand how eachothers brains work.
       p Have conversations about the ups/downs of each players line in the graph.
       p Why were you excited about the intro when Sorbusko, your neighbor was more into the outro? Did they like the classical flute at the end?
-      p I never knew Sorbusko liked the tremolo over the voices behind flutes!
+      p (After a round of enthusto....)
+      p Who knew! Above all else, Sorbusko was digging the tremolo'd voices behind flutes!
       p
-        a.btn.btn-default(href='#', role='button') View details »
+        br
+        br
+        div Latest Room is Listening to -->
+
+         a.btn.btn-primary(href='/songrooms/' + songRoom.id)
+             span= songRoom.name
     
     
       

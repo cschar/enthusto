@@ -4,7 +4,7 @@
 @import "lib/font-awesome/font-awesome";
 
 @import "themes/default/default";
-
+//@import "themes/gsdk/gsdk";
 // Scaffolding
 // -------------------------
 
@@ -67,4 +67,88 @@ textarea {
 
 .fa {
   margin-right: 6px;
+}
+
+
+// Custom
+body{
+  background: #f3face;
+  background-image: url("/leonardo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+//songrooms form input
+#songRoomName{
+  background: white;
+  width:90%;
+  opacity: 1;
+}
+
+
+$color-one: #fffffc;
+$color-two: wheat;
+$color-three: #eaeaea;
+
+.dHeader {
+   background: $color-one;
+   //padding-top: 1px;
+   padding-left: 10px;
+  opacity: 0.8;
+}
+
+.dBody {
+  background: $color-one;
+  opacity: 0.8;
+}
+
+
+.dFocus {
+  background: $color-two;
+  opacity: 1;
+}
+
+
+#detailContainer {
+  display: grid;
+  //grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 350px;
+  grid-column-gap: 20px;
+  grid-template-rows: 2;
+  grid-row-gap: 20px;
+  grid-template-areas:
+          "header header"
+          "user-info room-info";
+
+  /*min-height:400px*/
+}
+
+#detail-header {
+  grid-area: header;
+  //background: $color-three;
+}
+#user-info{
+  background: $color-three;
+  grid-area:user-info;
+}
+
+#room-info {
+    padding-left: 10px;
+    //opacity: 0.9;
+    background: $color-three;
+    //background: $color-two;
+	grid-area:room-info;
+    text-align: left;
+
+}
+
+#userList{
+  list-style: none;
+}
+
+.master {
+  background: lightgreen;
+}
+
+.listener {
+  background: #ffc866;
 }

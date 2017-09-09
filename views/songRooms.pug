@@ -1,25 +1,30 @@
 extends layout
 
 block content
-  .page-header
+  .page-header.dHeader
+
 
     h3 Add a Song Room
     form#songroomformA(action='/songrooms', method='post')
-      div
-        label(for='songRoomName') Song Room URL (soundcloud): 
+      div.dFocus
+        br
+        label(for='songRoomName') Song Room URL (soundcloud):
+        br
+        label(for='songRoomName') Ex: https://soundcloud.com/myartist/thesong
+        br
         input#songRoomName(type='text', name='name')
         input(type='hidden', name='_csrf', value=_csrf)
-
-      input(type='submit', value='Submit')
+        br
+        input(type='submit', value='Submit')
 
     br
     br
-    h3 All Song Rooms
+    h3 Available Song Rooms:
 
-  ul
-    for songRoom in songRooms
-      li
-        div
-          a(href='/songrooms/' + songRoom.id) 
-            span= songRoom.name
-          p= songRoom.id
+      ul
+        for songRoom in songRooms
+          li
+            div
+              a(href='/songrooms/' + songRoom.id)
+                span= songRoom.name
+              p= songRoom.id
