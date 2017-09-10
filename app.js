@@ -266,10 +266,6 @@ var reduceLevel = function(roomID){
       var s = rooms[roomID]['songPosition']
       var p = rooms[roomID]['isPaused']
     }
-  //console.log("recudelevel emit")
-  //console.log(s)
-  //console.log(p)
-  //console.log(rooms[roomID])
 
     io.emit('updateRoom', {roomID: roomID,
                            users: rooms[roomID]['users'],
@@ -279,9 +275,11 @@ var reduceLevel = function(roomID){
 
 //monitor which users are using which songID 
 //give primary user master control to seek through song
-
 var allClients = []
-// socket
+
+// On connection, define inside this function,
+// all other socket events that will happen
+// during the lifetime of socket.
 io.on('connection', (socket) => {
   console.log("socket connected")
   allClients.push(socket);
@@ -319,6 +317,7 @@ io.on('connection', (socket) => {
 //https://stackoverflow.com/questions/17287330/socket-io-handling-disconnect-event
   socket.on('disconnect', () => {
     console.log('Socket disconnected');
+    console.log(socket);
     var i = allClients.indexOf(socket);
     allClients.splice(i, 1);
 
@@ -343,8 +342,6 @@ io.on('connection', (socket) => {
           }
         }
       }
-    
-    console.log(`updating room ${roomID} to ` + rooms[roomID]['users'])
 
     //update all clients in room that user list has changed
     io.emit('updateRoom', {roomID: roomID,
@@ -368,16 +365,13 @@ io.on('connection', (socket) => {
   //socket.broadcast.emit --> send signal to all Other clients
   socket.on('masterToggle', (data) => {
     if (rooms.hasOwnProperty(roomID)){
-    console.log("set is paused")
-    console.log(data)
-    rooms[roomID]['isPaused'] = data.isPaused;
-  }
-    socket.broadcast.emit('masterToggle', {user: userData});
+      console.log("room" + roomID + " toggled playback")
+      console.log(data)
+      rooms[roomID]['isPaused'] = data.isPaused;
+    }
+   //updateRooms will take care of notifying other
+   // listeners to new isPaused state
   })
-  //socket.on('masterReset', (data) => {
-  //
-  //  socket.broadcast.emit('masterReset', {user: userData});
-  //})
 
   socket.on('masterSync', (data) => {
     //console.log("masterSync received")

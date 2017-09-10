@@ -104,21 +104,6 @@ function drawGraph(vueapp){
  	document.w = widget;
 
 
-
-	//clients receive these messages to control widget
-	//master controls widget with UI, fires off vue controllers to emit signals to clients
- //	socket.on('masterToggle', function(data){
- //		//console.log("told to toggle sc by" + data.user);
-	//	console.log("told to toggle sc by" + data.user.listenerID);
- //		widget.toggle();
- //})
- //
- // socket.on('masterReset', function(data){
-	//	//console.log("told to reset sc by" + data.user);
- //		console.log("told to reset sc by" + data.user.listenerID);
- //		widget.seekTo(0);
- //})
-
 	//if listenerID is same as first user id, set that user to master
 	var app = new Vue({
     el: '#vueapp',
@@ -133,7 +118,6 @@ function drawGraph(vueapp){
 				return (this.listenerID == this.users[0].listenerID)
 			},
   		masterToggle: function(){
-  			console.log('playing')
 
 				widget.toggle();
 				widget.isPaused(function(isPaused){
@@ -145,11 +129,6 @@ function drawGraph(vueapp){
 
 
   		},
-  		//masterReset: function(){
-  		//	console.log('reset')
-			 //	socket.emit('masterReset')
-			 //	widget.seekTo(0);
-  		//},
   		incr: function(){
   			// y = 0; //y has to be set to the current level to balance out graph 
   			//y = this.level;
@@ -166,7 +145,6 @@ function drawGraph(vueapp){
   
 
  socket.on('greet', function (data) {
-    console.log(data);
     listenerID = data.listenerID;
     app.listenerID = data.listenerID;
     
@@ -182,12 +160,10 @@ function drawGraph(vueapp){
  socket.on('updateRoom', function(data){
 
    if (data.roomID != roomID){
-     console.log("DOESNT MATCH...skipping")
+     //skip, not our data
      return;
    }else{
      console.log('updating room ');
-     console.log(data.roomID)
-     console.log(data)
    }
 
 
@@ -239,12 +215,10 @@ function drawGraph(vueapp){
 
 	socket.on('masterSync', function (data) {
     if (data.roomID != roomID){
-     console.log("Master sync...skipping")
+     //skip not our sync data
      return;
    }else{
       console.log("Received updateSync")
-     console.log(data.roomID)
-     console.log(data)
    }
 
 		//clients
@@ -255,11 +229,6 @@ function drawGraph(vueapp){
 				console.log("Resynchronizing. milliseconds off by :" + listenerOffset);
 				widget.seekTo(data.songPositionInMilliseconds)
 
-				//only play if local client si already playing...
-				//NO! need to know if playing by master,.. updateRoom
-				//widget.isPaused(function(isPaused){
-				//	if(!isPaused){ widget.play()	}
-				//})
 			}
 		})
 	})
