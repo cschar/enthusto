@@ -386,7 +386,8 @@ io.on('connection', (socket) => {
       rooms[roomID]['songPosition'] = data
     }
     //send to all other clients except one that sent this
-    socket.broadcast.emit('masterSync', {songPositionInMilliseconds: data});
+    socket.broadcast.emit('masterSync', {roomID: roomID,
+                                         songPositionInMilliseconds: data});
   })
 
 });

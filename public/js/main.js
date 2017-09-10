@@ -180,8 +180,16 @@ function drawGraph(vueapp){
 
 
  socket.on('updateRoom', function(data){
- 	console.log('updating room with ');
-	console.log(data)
+
+   if (data.roomID != roomID){
+     console.log("DOESNT MATCH...skipping")
+     return;
+   }else{
+     console.log('updating room ');
+     console.log(data.roomID)
+     console.log(data)
+   }
+
 
  	app.users = data.users;
  	for( var i=0; i < data.users.length; i++){
@@ -230,8 +238,15 @@ function drawGraph(vueapp){
 
 
 	socket.on('masterSync', function (data) {
-		console.log("Received updateSync")
-		console.log(data);
+    if (data.roomID != roomID){
+     console.log("Master sync...skipping")
+     return;
+   }else{
+      console.log("Received updateSync")
+     console.log(data.roomID)
+     console.log(data)
+   }
+
 		//clients
 		//reset widget position if they are de-synchronized by more than 1 second
 		widget.getPosition(function (mseconds) {
