@@ -47,6 +47,8 @@ $(document).ready(function() {
 	ctxs.font         = 'italic 30px sans-serif';
 	ctxs.textBaseline = 'top';
 	ctxs.font         = 'bold 30px sans-serif';
+
+
 function drawGraph(vueapp){
     //since we currently increment X 1 unit each second,
     //use innerX to split up the 1 second unit for better graphing
@@ -71,6 +73,7 @@ function drawGraph(vueapp){
     ctxs.fillRect(canvasX, 130,5,200);
 
 
+    //5 ppl max
     var colors = ['#F66', '#66F', '#6C6', '#FF6', '#C3C']
 
 		for( var i=0; i < vueapp.users.length; i++){
@@ -111,6 +114,7 @@ function drawGraph(vueapp){
    	  listenerID: '',
 			synchResponsibilitySet: false,
    	  level: 0,
+      incrHeld: null,
       users: [{listenerID:'dummy', level: 0}]
   	},
   	methods:{
@@ -129,11 +133,30 @@ function drawGraph(vueapp){
 
 
   		},
+      mouseDown: function(e) {
+        //emit socket, start interval
+
+        socket.emit('clientIncr', {level: 1});
+        level = 1
+        function incr_every_250(){
+          console.log("incr")
+          level += 1;
+          //eevery 750 ms
+          if ( level % 3 == 0 && level < 7){
+            socket.emit('clientIncr', {level: 3});
+          }
+          if ( level % 3 == 0 && level >= 7){ //more after 1500ms
+            socket.emit('clientIncr', {level: 5});
+          }
+        }
+        this.incrHeld = setInterval(incr_every_250, 250)
+    },
+      mouseUp: function(e) {
+        //clear interval
+        clearInterval(this.incrHeld)
+    },
   		incr: function(){
-  			// y = 0; //y has to be set to the current level to balance out graph 
-  			//y = this.level;
-  			console.log('setting y to ' + this.level);
-  			socket.emit('clientIncr', {listenerID: listenerID });
+  			//socket.emit('clientIncr', {listenerID: listenerID });
   		}
   	}
 	})

@@ -29,7 +29,7 @@ block content
       div(v-if="listenerID == users[0].listenerID")
         button#masterToggle(v-on:click="masterToggle") toggle
 
-      button#incr(v-on:click="incr")
+      button#incr(v-on:click="incr" @mousedown="mouseDown" @mouseup="mouseUp")
         i.fa.fa-sort-amount-asc.fa-2x increment 
 
       

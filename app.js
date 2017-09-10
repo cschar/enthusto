@@ -317,7 +317,7 @@ io.on('connection', (socket) => {
 //https://stackoverflow.com/questions/17287330/socket-io-handling-disconnect-event
   socket.on('disconnect', () => {
     console.log('Socket disconnected');
-    console.log(socket);
+    //console.log(socket);
     var i = allClients.indexOf(socket);
     allClients.splice(i, 1);
 
@@ -352,7 +352,8 @@ io.on('connection', (socket) => {
   socket.on('clientIncr', (data) => {
     console.log("client incremented value")
     console.log(data);
-    userData['level'] += 1;
+    //userData['level'] += 1;
+    userData['level'] += parseInt(data.level)
     //update all clients
     io.emit('updateRoom', {roomID: roomID,
                            users: rooms[roomID]['users'],
