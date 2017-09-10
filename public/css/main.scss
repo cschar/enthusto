@@ -71,8 +71,13 @@ textarea {
 
 
 // Custom
+
+$color-one: #fffffc;
+$color-two: wheat;
+$color-three: #eaeaea;
+
 body{
-  background: #f3face;
+  background: $color-one;
   background-image: url("/leonardo.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -85,9 +90,6 @@ body{
 }
 
 
-$color-one: #fffffc;
-$color-two: wheat;
-$color-three: #eaeaea;
 
 .dHeader {
    background: $color-one;
