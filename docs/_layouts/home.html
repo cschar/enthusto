@@ -1,16 +1,15 @@
 ---
-layout: post
-title:  "-=-=-=--=--=-==-=- html blowup"
-date:   2015-02-31 15:28:41 -0500
-categories: foob of the wz
-excerpt: "a recursive excerpt"
+layout: default
 ---
 
-# Tester
-   <h2 class="footer-heading">{{ site.title | escape }}</h2>
+<div class="home">
+  {% if page.title %}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {% endif %}
 
+  {{ content }}
 
-{% if site.posts.size > 0 %}
+  {% if site.posts.size > 0 %}
     <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
     <ul class="post-list">
       {% for post in site.posts %}
@@ -23,7 +22,12 @@ excerpt: "a recursive excerpt"
           </a>
         </h3>
         {% if site.show_excerpts %}
-          {{ post.excerpt }}
+         
+          EE: {{ post.excerpt }}
+          <br/>
+          EE: {% excerpt %}
+         <br/>
+            {{ post.content | strip_html | truncatewords:75 }}
         {% endif %}
       </li>
       {% endfor %}
@@ -32,3 +36,4 @@ excerpt: "a recursive excerpt"
     <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
   {% endif %}
 
+</div>
