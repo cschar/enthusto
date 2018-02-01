@@ -3,6 +3,8 @@ theme: minima
 title: Welcome to the enthusto homepage , circa 2111
 description: Feel free to peruse then listen 
 
+pages:
+  - about.md
 
 header_pages:
   - about.md
