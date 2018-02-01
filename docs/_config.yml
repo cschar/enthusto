@@ -6,6 +6,8 @@ description: Feel free to peruse then listen
 pages:
   - about.md
 
+page_paths: true
+
 header_pages:
   - about.md
   - entho.html
