@@ -2,7 +2,9 @@
 
 
   <div class="wrapper">
-    <div class="custom-class">wra wra</div>
+    <div class="custom-class">wra wra
+        {% octicon alert height:32 class:"right left" aria-label:hi %}
+    </div>
     {% assign default_paths = site.pages | map: "path" %}
     {% assign page_paths = site.header_pages | default: default_paths %}
     <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
