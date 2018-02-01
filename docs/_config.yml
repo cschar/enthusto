@@ -24,6 +24,7 @@ show_excerpts: true
 # https://pages.github.com/versions/
 gems:
   - jekyll-octicons
+  - jekyll-mermaid
   
   # doesnt work on github pages
   - jekyll-asciinema   
