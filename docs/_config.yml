@@ -7,3 +7,11 @@ description: Feel free to peruse then listen
 header_pages:
   - about.md
   - entho.html
+
+disqus:
+    shortname: disqus_FCVoWPUQuI
+
+#
+#google_analytics: UA-NNNNNNNN-N
+
+show_excerpts: true           
