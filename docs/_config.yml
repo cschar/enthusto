@@ -1,12 +1,11 @@
 #theme: jekyll-theme-merlot
 theme: minima
-title: Welcome to the enthusto homepage , circa 2111
+title: , circa 2111
 description: Feel free to peruse then listen 
 
 pages:
   - about.md
 
-page_paths: true
 
 header_pages:
   - about.md
