@@ -21,3 +21,4 @@ show_excerpts: true
 
 gems:
   - jekyll-octicons
+  - jekyll-asciinema
