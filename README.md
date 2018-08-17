@@ -20,7 +20,7 @@ MONGOLAB_URI=mongodb://myuser:mypass@mymlabhash.mlab.com:31512/mydb
 
 
 ```
-now --dotenv=.env.prod --public
+now --dotenv=.env.prod --public --npm
 
 #make it point to enthusto.now.sh
 now alias enthusto  
@@ -28,6 +28,13 @@ now alias enthusto
 ## free up instances
 now ls enthusto
 now rm enthusto
+```
+
+alltogether
+```
+now rm enthusto
+now --dotenv=.env.prod --public
+now alias enthusto  
 ```
 
 ####possible TODOs
