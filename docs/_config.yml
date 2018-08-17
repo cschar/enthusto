@@ -2,6 +2,10 @@
 
 # https://github.com/jekyll/minima/tree/master/_layouts
 theme: minima
+
+#fancier
+# https://github.com/mmistakes/minimal-mistakes
+
 title: circa 2111
 description: Feel free to peruse then listen 
 
@@ -46,8 +50,3 @@ gems:
 #     John->>Bob: How about you?
 #     Bob-->>John: Jolly good!
 # {% endmermaid %}
-
-  - jekyll-mermaid
-  
-  # doesnt work on github pages
-  - jekyll-asciinema   

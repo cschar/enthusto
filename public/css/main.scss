@@ -8,6 +8,17 @@
 // Scaffolding
 // -------------------------
 
+
+
+
+
+
+
+
+
+
+
+
 html {
   position: relative;
   min-height: 100%;
@@ -137,10 +148,15 @@ body{
 }
 
 #detail-header {
+  border-radius: 20px;
+  padding: 20px;
   grid-area: header;
-  //background: $color-three;
+  background: $color-three;
 }
 #user-info{
+  border-radius: 20px;
+  padding: 20px;
+
   background: $color-three;
   grid-area:user-info;
 }
@@ -155,6 +171,15 @@ body{
 
 }
 
+//buttons
+#masterToggle{
+  border-radius: 5px;
+  width: 200px
+}
+#incr{
+  border-radius: 5px;
+  width:200px
+}
 #userList{
   list-style: none;
 }

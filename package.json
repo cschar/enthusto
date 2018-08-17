@@ -1,12 +1,7 @@
 {
-  "name": "hackathon-starter",
-  "version": "4.3.0",
-  "description": "A boilerplate for Node.js web applications",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
-  },
-  "author": "Sahat Yalkabov",
+  "name": "enthusto",
+  "version": "0.1",
+  "description": "enthusto demo app",
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
