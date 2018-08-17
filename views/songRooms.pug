@@ -20,11 +20,12 @@ block content
     br
     br
     h3 Available Song Rooms:
-
-      ul
+      ul#songRoomList
         for songRoom in songRooms
-          li
+          li.songRoomListItem
+            div.songRoomListItemHeader
+              i.fa.fa-music.fa-1x 
             div
               a(href='/songrooms/' + songRoom.id)
-                span= songRoom.name
-              p= songRoom.id
+                span= songRoom.id
+              p= songRoom.name

@@ -2,29 +2,46 @@ extends layout
 
 block content
   div.dHeader
-      h1 Enthusiasm sound graph
+      h1 Enthusiasm Sound Graph
       p.lead Listen along with others and match your interest through the song
       hr
   .row.dBody
-    .col-sm-12
+    .col-sm-12.noPadding
       h2 Fun Party Game to understand how eachothers brains work.
-      p Have conversations about the ups/downs of each players line in the graph.
-      p Why were you excited about the intro when Sorbusko, your neighbor was more into the outro? Did they like the classical flute at the end?
-      p (After a round of enthusto....)
-      p Who knew! Above all else, Sorbusko was digging the tremolo'd voices behind flutes!
-      p
-        br
-        br
-        div
-         a.btn.btn-primary(href='/songrooms')
-             span All rooms -->
-        br
-        br
-        div Latest Room is Listening to -->
+      
+      div.storySection.bgOne
+        i.fa.fa-comments-o.fa-3x 
+        span.homeSpan Have conversations about the ups/downs of each players line in the graph.
 
-         br
-         a.btn.btn-primary(href='/songrooms/' + songRoom.id)
-             span= songRoom.name
+      div.storySection.bgTwo
+        i.fa.fa-hard-of-hearing.fa-3x 
+        span.homeSpan Why were you excited about the intro when Sorbusko, your neighbor was more into the outro? Did they like the classical flute at the end?
+      
+      br
+      br
+      div.storySection
+        i.fa.fa-hourglass-3.fa-3x 
+        span.homeSpan (After a round of enthusto....)
+      br
+      br
+
+      div.storySection.bgOne
+        i.fa.fa-meh-o.fa-3x 
+        span.homeSpan Who knew! Above all else, Sorbusko was digging the tremolo'd voices behind flutes!
+      
+      br
+      br
+      div
+        a.btn.btn-primary(href='/songrooms').enthustoButton
+            span.homeSpan All rooms -->
+      br
+      br
+      div.lastSection
+        h2 Latest Room is Listening to -->
+
+        br
+        a.btn.btn-primary(href='/songrooms/' + songRoom.id).enthustoButton= songRoom.name
+          
     
     
       

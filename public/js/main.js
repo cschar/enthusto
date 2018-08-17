@@ -118,9 +118,11 @@ function setUpSoundCloud(){
 			});
 			widget.getDuration(function(duration){
 				// alert(parseInt(duration)/1000);
-				CANVAS_WIDTH = parseInt(duration)/1000;
+				CANVAS_WIDTH = (parseInt(duration)/1000) * 5;
 				var section = document.getElementById("canvasSection")
-				section.width = CANVAS_WIDTH * 5
+				section.width = CANVAS_WIDTH;
+				var ctxs = section.getContext('2d');
+				ctxs.canvas.width  = CANVAS_WIDTH;
 			});
 
 	  widget.bind(SC.Widget.Events.SEEK, function(data) {console.log(data);})
