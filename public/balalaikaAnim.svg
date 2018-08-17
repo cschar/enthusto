@@ -1,0 +1,122 @@
+<svg version="1.1" id="el_z8L0vmYZDrX" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 470 470" style="enable-background:new 0 0 470.001 470.001;" xml:space="preserve"><style type="text/css">@-webkit-keyframes el_56JRIBtg3fU_k3myWyaq3_Animation {
+    0% {
+        -webkit-transform: scale(0.7, 0.7);
+                transform: scale(0.7, 0.7)
+    }
+    25% {
+        -webkit-transform: scale(0.8, 0.8);
+                transform: scale(0.8, 0.8)
+    }
+    100% {
+        -webkit-transform: scale(0.7, 0.7);
+                transform: scale(0.7, 0.7)
+    }
+}
+@keyframes el_56JRIBtg3fU_k3myWyaq3_Animation {
+    0% {
+        -webkit-transform: scale(0.7, 0.7);
+                transform: scale(0.7, 0.7)
+    }
+    25% {
+        -webkit-transform: scale(0.8, 0.8);
+                transform: scale(0.8, 0.8)
+    }
+    100% {
+        -webkit-transform: scale(0.7, 0.7);
+                transform: scale(0.7, 0.7)
+    }
+}
+@-webkit-keyframes el_56JRIBtg3fU_GS-wxrjHX_Animation {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg)
+    }
+}
+@keyframes el_56JRIBtg3fU_GS-wxrjHX_Animation {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg)
+    }
+}
+#el_z8L0vmYZDrX * {
+    -webkit-animation-duration: 4s;
+            animation-duration: 4s;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+    -webkit-animation-timing-function: cubic-bezier(0, 0, 1, 1);
+            animation-timing-function: cubic-bezier(0, 0, 1, 1)
+}
+#el_WNNCNmSD7t0_5GyxdGX6S {
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    transform-box: fill-box;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
+}
+#el_56JRIBtg3fU_GS-wxrjHX {
+    -webkit-animation-name: el_56JRIBtg3fU_GS-wxrjHX_Animation;
+            animation-name: el_56JRIBtg3fU_GS-wxrjHX_Animation;
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    transform-box: fill-box;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
+}
+#el_56JRIBtg3fU_k3myWyaq3 {
+    -webkit-animation-name: el_56JRIBtg3fU_k3myWyaq3_Animation;
+            animation-name: el_56JRIBtg3fU_k3myWyaq3_Animation;
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    transform-box: fill-box;
+    -webkit-transform: scale(0.7, 0.7);
+            transform: scale(0.7, 0.7)
+}</style><style/>
+<g id="el_77-6wlzsAwr">
+	<g id="el_4Dor44P8y1c">
+		<g id="el_56JRIBtg3fU_GS-wxrjHX" data-animator-group="true" data-animator-type="1"><g id="el_56JRIBtg3fU_k3myWyaq3" data-animator-group="true" data-animator-type="2"><g id="el_56JRIBtg3fU">
+			<path d="M467.804,47.137l-44.94-44.94c-1.467-1.468-3.483-2.259-5.55-2.193c-2.074,0.068-4.026,0.992-5.394,2.553l-8.747,9.982&#10;&#9;&#9;&#9;&#9;l-5.479-5.479c-2.929-2.929-7.678-2.929-10.606,0c-2.929,2.929-2.929,7.678,0,10.607l6.178,6.178l-8.363,9.544l-5.479-5.479&#10;&#9;&#9;&#9;&#9;c-2.929-2.929-7.678-2.929-10.606,0c-2.929,2.929-2.929,7.677,0,10.606l6.179,6.179l-9.399,10.726&#10;&#9;&#9;&#9;&#9;c-0.932,1.063-1.544,2.368-1.766,3.764l-2.638,16.573l-106.151,100.76L5.56,243.368c-2.588,0.694-4.61,2.715-5.304,5.304&#10;&#9;&#9;&#9;&#9;c-0.693,2.588,0.047,5.35,1.941,7.244l211.888,211.888c1.425,1.425,3.34,2.197,5.304,2.197c0.647,0,1.299-0.083,1.94-0.255&#10;&#9;&#9;&#9;&#9;c2.588-0.694,4.61-2.715,5.304-5.304l66.849-249.483l100.76-106.15l16.574-2.637c1.396-0.222,2.701-0.834,3.764-1.766&#10;&#9;&#9;&#9;&#9;l21.151-18.534l6.178,6.178c1.464,1.465,3.384,2.197,5.303,2.197s3.839-0.732,5.303-2.197c2.929-2.929,2.929-7.677,0-10.606&#10;&#9;&#9;&#9;&#9;l-5.478-5.478l20.407-17.882c1.561-1.367,2.485-3.32,2.553-5.394C470.065,50.616,469.272,48.604,467.804,47.137z&#10;&#9;&#9;&#9;&#9; M281.293,206.012c-0.011,0.012-34.758,36.618-34.758,36.618c-2.852,3.004-2.728,7.751,0.276,10.603&#10;&#9;&#9;&#9;&#9;c1.451,1.377,3.308,2.061,5.163,2.061c1.985,0,3.966-0.783,5.44-2.336l14.432-15.204l-56.339,210.257L21.99,254.495&#10;&#9;&#9;&#9;&#9;l210.258-56.338l-15.203,14.431c-3.004,2.852-3.128,7.599-0.276,10.603c2.852,3.003,7.598,3.128,10.603,0.276l36.584-34.726&#10;&#9;&#9;&#9;&#9;c0.018-0.017,0.037-0.035,0.055-0.052l104.053-98.77l12.019,12.019L281.293,206.012z M406.322,91.697l-13.17,2.096L376.208,76.85&#10;&#9;&#9;&#9;&#9;l2.096-13.17l39.618-45.212l33.611,33.611L406.322,91.697z" id="el_WNNCNmSD7t0"/>
+			<path d="M125.463,315.541c-2.929-2.929-7.678-2.929-10.606,0c-2.929,2.929-2.929,7.678,0,10.606l28.997,28.997&#10;&#9;&#9;&#9;&#9;c1.464,1.464,3.384,2.197,5.303,2.197s3.839-0.732,5.303-2.197c2.929-2.929,2.929-7.678,0-10.606L125.463,315.541z" id="el_dhMrMGY2sat"/>
+			<path d="M131.652,276.825c-2.929-2.929-7.678-2.929-10.606,0c-2.929,2.929-2.929,7.678,0,10.606l61.524,61.524&#10;&#9;&#9;&#9;&#9;c1.464,1.464,3.384,2.197,5.303,2.197s3.839-0.732,5.303-2.197c2.929-2.929,2.929-7.678,0-10.606L131.652,276.825z" id="el_AeroSQvWaK5"/>
+			<path d="M208.555,238.946c-6.01,0-11.661,2.34-15.91,6.59c-8.773,8.773-8.773,23.047,0,31.82c4.25,4.25,9.9,6.59,15.91,6.59&#10;&#9;&#9;&#9;&#9;s11.66-2.34,15.91-6.59c8.773-8.773,8.773-23.047,0-31.82C220.215,241.287,214.565,238.946,208.555,238.946z M213.858,266.75&#10;&#9;&#9;&#9;&#9;c-1.417,1.417-3.3,2.197-5.303,2.197s-3.887-0.78-5.304-2.197c-2.924-2.924-2.924-7.683,0-10.607&#10;&#9;&#9;&#9;&#9;c1.417-1.417,3.3-2.197,5.304-2.197c2.003,0,3.887,0.78,5.303,2.197C216.782,259.067,216.782,263.826,213.858,266.75z" id="el_6HHQabKt2QR"/>
+		</g></g></g>
+	</g>
+</g>
+<g id="el_oSFqvyv3Gzu">
+</g>
+<g id="el_XwVSo_i0yPl">
+</g>
+<g id="el_yBFtUiyOdOr">
+</g>
+<g id="el_AsBzXl0v2VL">
+</g>
+<g id="el_3WFVO_mp6sS">
+</g>
+<g id="el_rwc-qT1A5Qd">
+</g>
+<g id="el_AzE7Fo4NkLm">
+</g>
+<g id="el_uWdfxMUMAcw">
+</g>
+<g id="el_aAh8n5HqKvn">
+</g>
+<g id="el_ZcTZJVNT4VS">
+</g>
+<g id="el_RfhSjtUQNt6">
+</g>
+<g id="el_cUKc3a5DKYw">
+</g>
+<g id="el_Fybecwlcqy5">
+</g>
+<g id="el_pO78t5ZzONy">
+</g>
+<g id="el_yFRXrNtNLXk">
+</g>
+<script>(function(){var a=document.querySelector('#el_z8L0vmYZDrX'),b=a.querySelectorAll('style'),c=function(d){b.forEach(function(f){var g=f.textContent;g&amp;&amp;(f.textContent=g.replace(/transform-box:[^;\r\n]*/gi,'transform-box: '+d))})};c('initial'),window.requestAnimationFrame(function(){return c('fill-box')})})();</script></svg>

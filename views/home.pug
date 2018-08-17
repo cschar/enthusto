@@ -6,7 +6,9 @@ block content
       p.lead Listen along with others and match your interest through the song
       hr
   .row.dBody
-    .col-sm-12.noPadding
+    .col-xs-6#svgAnim1
+      object(type="image/svg+xml",data="balalaikaAnim.svg")
+    .col-xs-6.noPadding
       h2 Fun Party Game to understand how eachothers brains work.
       
       div.storySection.bgOne
@@ -28,20 +30,33 @@ block content
       div.storySection.bgOne
         i.fa.fa-meh-o.fa-3x 
         span.homeSpan Who knew! Above all else, Sorbusko was digging the tremolo'd voices behind flutes!
-      
+
+  .row.dBody  
+    .col-xs-8
       br
       br
-      div
+      div.lastSection
         a.btn.btn-primary(href='/songrooms').enthustoButton
             span.homeSpan All rooms -->
       br
-      br
+      
       div.lastSection
         h2 Latest Room is Listening to -->
 
         br
         a.btn.btn-primary(href='/songrooms/' + songRoom.id).enthustoButton= songRoom.name
-          
-    
+
+    .col-xs-4
+      img#svgAnim2(width="200", src="keytar-1Anim.svg")
+        //- object(type="image/svg+xml",data="keytar-1Anim.svg")
+
+  div.container.text-center
+    //- p.pull-left © 2017 Company, Inc. All Rights Reserved
+    ul.pull-right.creditsList
+      li 
+        span SVG icons designed by Freepik from Flaticon
+      li
+        span Animation provided by svgator  
+  
     
       
