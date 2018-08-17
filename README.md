@@ -4,11 +4,31 @@
 ## develop locally
 
 > npm run start
+or
 > nodemon app.js
 
 make sure you have mongo running in another tab
 > mongod
 
+## push to zeit
+
+
+```
+#copy .env.example to .env.prod and change mongolab uri
+MONGOLAB_URI=mongodb://myuser:mypass@mymlabhash.mlab.com:31512/mydb
+```
+
+
+```
+now --dotenv=.env.prod --public
+
+#make it point to enthusto.now.sh
+now alias enthusto  
+
+## free up instances
+now ls enthusto
+now rm enthusto
+```
 
 ####possible TODOs
 

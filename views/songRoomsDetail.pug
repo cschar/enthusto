@@ -7,7 +7,7 @@ block content
 
       div#detailContainer(v-cloak)
         div#detail-header
-          p Songroom #{songRoom.id}
+          h3 Songroom #{songRoom.id}
           p Listening to #{songRoom.name}
 
         div#user-info
@@ -26,19 +26,23 @@ block content
           ul#userList
             li(v-for="user in users") {{ user }}
 
-      div(v-if="listenerID === users[0].listenerID")
+      div(v-if="listenerID == users[0].listenerID")
         button#masterToggle(v-on:click="masterToggle").btn.btn-primary
-          i.fa.fa-toggle-right.fa-2x Toggle
+          i.fa.fa-toggle-right.fa-2x 
+          span#toggleSpan Toggle
+
 
       button#incr(v-on:click="incr" @mousedown="mouseDown" @mouseup="mouseUp").btn.btn-primary
         i.fa.fa-sort-amount-asc.fa-2x increment 
 
       
 
+    //- div#chartDiv
+      //- canvas#canvasChart Error, canvas is not supported
+
     canvas#canvasSection Error, canvas is not supported
-    div(v-show="listenerID !== users[0].listenerID")
-      iframe#sc-widget(src='https://w.soundcloud.com/player/?url='+songRoom.name,
-         width='100%', height='465', scrolling='no', frameborder='no')
+    iframe#sc-widget(src='https://w.soundcloud.com/player/?url='+songRoom.name
+    , width='100%', height='465', scrolling='no', frameborder='no')
     
     
 

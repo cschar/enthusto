@@ -1,6 +1,97 @@
 
 
 
+//chart code
+
+
+window.chartColors = {
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)'
+};
+
+
+var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		var config = {
+			type: 'line',
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'My First dataset',
+					backgroundColor: window.chartColors.red,
+					borderColor: window.chartColors.red,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+					fill: false,
+				}, {
+					label: 'My Second dataset',
+					fill: false,
+					backgroundColor: window.chartColors.blue,
+					borderColor: window.chartColors.blue,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Line Chart'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value'
+						}
+					}]
+				}
+			}
+		};
+
+
+		// window.onload = function() {
+		// 	var ctx = document.getElementById('canvasChart').getContext('2d');
+		// 	window.myLine = new Chart(ctx, config);
+		// };
+
+
+		// END chart code
+
 var x = 0;
 var scX = 0;
 
@@ -8,7 +99,7 @@ var scX = 0;
 var innerX = 0;
 var guiInterval = 200; //draw each 200ms 
 var innerSplits = (1000 / guiInterval)
-
+var CANVAS_WIDTH = 1400
 
 
 
@@ -23,8 +114,15 @@ function setUpSoundCloud(){
 
   widget.bind(SC.Widget.Events.READY, function() {
       widget.bind(SC.Widget.Events.PLAY_PROGRESS, function(data) {
-      scX = data.currentPosition/1000
-  		});
+      	scX = data.currentPosition/1000
+			});
+			widget.getDuration(function(duration){
+				// alert(parseInt(duration)/1000);
+				CANVAS_WIDTH = parseInt(duration)/1000;
+				var section = document.getElementById("canvasSection")
+				section.width = CANVAS_WIDTH * 5
+			});
+
 	  widget.bind(SC.Widget.Events.SEEK, function(data) {console.log(data);})
 	  widget.bind(SC.Widget.Events.PLAY, function() {});
 	  widget.bind(SC.Widget.Events.PAUSE, function() {});
@@ -36,13 +134,17 @@ function setUpSoundCloud(){
   return widget;
 }
 
+
+
+
 $(document).ready(function() {
 	var canvas = document.getElementById('canvasSection');
-  if(canvas == null){ //we're not on a detail page
+	if(canvas == null){ //we're not on a detail page
+	  console.log("no canvas")
 		return;
 	}
 	var ctxs = canvas.getContext('2d');
-	ctxs.canvas.width  = 1400;
+	ctxs.canvas.width  = CANVAS_WIDTH;
 	ctxs.fillStyle    = '#0ff';
 	ctxs.font         = 'italic 30px sans-serif';
 	ctxs.textBaseline = 'top';
@@ -67,8 +169,10 @@ function drawGraph(vueapp){
     // ctxs.fillRect(0, 0,1000,1000);
 
     //Draw length of song
-    ctxs.fillStyle='#F00';
-    ctxs.fillRect(0, 130,1000,200);
+		ctxs.fillStyle='#F00';
+		
+
+    ctxs.fillRect(0, 130, canvas.width ,200);
     ctxs.fillStyle='#000';
     ctxs.fillRect(canvasX, 130,5,200);
 
@@ -85,7 +189,16 @@ function drawGraph(vueapp){
 
 			var blipY = Math.max(user.level*3, 0);
 	    ctxs.fillRect(canvasX, blipY,2,10);
-	    // ctxs.strokeText(payload.data.value, x*3, 50);
+			// ctxs.strokeText(payload.data.value, x*3, 50);
+			
+			// var month = MONTHS[config.data.labels.length % MONTHS.length];
+			// 	config.data.labels.push(month);
+
+			// 	config.data.datasets.forEach(function(dataset) {
+			// 		dataset.data.push(randomScalingFactor());
+			// 	});
+
+			// 	window.myLine.update();
 
   	}
     innerX += 1;

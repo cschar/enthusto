@@ -101,8 +101,9 @@ $color-three: #eaeaea;
 
 body{
   background: $color-one;
+  
   background-image: url("/leonardo.png");
-  background-repeat: no-repeat;
+  // background-repeat: no-repeat;
   background-size: cover;
 }
 //songrooms form input
@@ -163,25 +164,51 @@ body{
 
 #room-info {
     padding-left: 10px;
+    border-radius: 20px;
+    padding: 20px;
     //opacity: 0.9;
     background: $color-three;
     //background: $color-two;
-	grid-area:room-info;
+  	grid-area:room-info;
     text-align: left;
 
 }
 
 //buttons
 #masterToggle{
+  margin-top:10px;
   border-radius: 5px;
+  margin-bottom:20px;
   width: 200px
 }
+
+.toggleSpan {
+  padding-left: 15px;
+}
+
 #incr{
   border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   width:200px
 }
 #userList{
   list-style: none;
+}
+
+#canvasChart{
+  width: 75%;
+}
+
+#canvasSection{
+  overflow: hidden;
+  position: relative;
+  margin-top:10px;
+  background-color: $color-three;
+}
+
+#chartDiv{
+  background-color: $color-three;
 }
 
 .master {
