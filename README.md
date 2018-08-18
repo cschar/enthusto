@@ -32,8 +32,8 @@ now rm enthusto
 
 alltogether
 ```
-now rm enthusto
-now --dotenv=.env.prod --public
+now rm enthusto -y
+now --dotenv=.env.prod --public --npm
 now alias enthusto  
 ```
 

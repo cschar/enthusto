@@ -13,29 +13,6 @@
 
 
 
-.container {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px; }
-  .container:before, .container:after {
-    content: " ";
-    display: table; }
-  .container:after {
-    clear: both; }
-  @media (min-width: 768px) {
-    .container {
-      width: 750px; } }
-  @media (min-width: 992px) {
-    .container {
-      width: 800px; } }
-  @media (min-width: 1200px) {
-    .container {
-      width: 1000px; } }
-
-
-
-
 
 html {
   position: relative;
